@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GraniteHouse.Models
 {
-    public class ProductTypes
+    public class SpecialTags
     {
         public string Id { get; set; }
 

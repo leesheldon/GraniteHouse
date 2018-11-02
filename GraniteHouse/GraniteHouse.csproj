@@ -6,9 +6,39 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\Migrations\20181102052717_AddProducTypesModel.cs" />
+    <Compile Remove="Data\Migrations\20181102052717_AddProducTypesModel.Designer.cs" />
+    <Compile Remove="Data\Migrations\20181102090321_AddSpecialTagsModel.cs" />
+    <Compile Remove="Data\Migrations\20181102090321_AddSpecialTagsModel.Designer.cs" />
+    <Compile Remove="Data\Migrations\20181102090505_AddProductsModel.cs" />
+    <Compile Remove="Data\Migrations\20181102090505_AddProductsModel.Designer.cs" />
+    <Compile Remove="Data\Migrations\20181102093651_AddProductTypesModel.cs" />
+    <Compile Remove="Data\Migrations\20181102093651_AddProductTypesModel.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.5" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Areas\Admin\Views\_ViewImports.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Admin\Views\_ViewStart.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Customer\Views\_ViewImports.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Customer\Views\_ViewStart.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
   </ItemGroup>
 
 </Project>

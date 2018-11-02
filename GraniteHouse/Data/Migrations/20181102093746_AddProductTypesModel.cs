@@ -2,7 +2,7 @@
 
 namespace GraniteHouse.Data.Migrations
 {
-    public partial class AddProducTypesModel : Migration
+    public partial class AddProductTypesModel : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,7 +11,7 @@ namespace GraniteHouse.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
