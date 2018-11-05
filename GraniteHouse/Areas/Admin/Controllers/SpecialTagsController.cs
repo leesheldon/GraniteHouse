@@ -101,7 +101,7 @@ namespace GraniteHouse.Areas.Admin.Controllers
         // GET Delete Action method
         public async Task<IActionResult> Delete(string id)
         {
-            if (id == "")
+            if (string.IsNullOrEmpty(id))
             {
                 return NotFound();
             }
@@ -118,8 +118,13 @@ namespace GraniteHouse.Areas.Admin.Controllers
         // POST Delete Action method
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteCOnfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
+            if (string.IsNullOrEmpty(id))
+            {
+                return NotFound();
+            }
+
             var specialTagFromDB = await _db.SpecialTags.FindAsync(id);
             if (specialTagFromDB == null)
             {
