@@ -1,0 +1,163 @@
+﻿@model GraniteHouse.Models.ViewModels.ShoppingCartViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<br />
+<form method="post" onsubmit="return onValidation()">
+    <h2 class="text-info">Your Shopping Cart</h2>
+    <br />
+    @if(Model.Products.Count > 0)
+    {
+        <div class="container border border-secondary rounded" style="padding: 15px;">
+            <div class="row">
+                <div class="col-8" style="border-right: 1px solid #bbb9b9;">
+                    <table class="table table-striped" style="width: 100%;">
+                        <tr class="table-info">
+                            <th style="text-align: center; width: 20%;"></th>
+                            <th style="text-align: center;">
+                                <label asp-for="@Model.Products[0].Name"></label>
+                            </th>
+                            <th style="text-align: center;">
+                                <label asp-for="@Model.Products[0].Price"></label>
+                            </th>
+                            <th style="text-align: center;">
+                                <label asp-for="@Model.Products[0].ShadeColor"></label>
+                            </th>
+                            <th style="text-align: center;">
+                                <label asp-for="@Model.Products[0].ProductTypes.Name"></label>
+                            </th>
+                            <th style="text-align: center;"></th>
+                        </tr>
+                        @foreach (var item in Model.Products)
+                        {
+                        <tr style="padding: 50px;">
+                            <td>
+                                <a asp-area="Customer" asp-controller="Home" asp-action="Details" asp-route-id="@item.Id">
+                                    <img src="@item.Image" style="width: 100%; margin: auto; display: block; border-radius: 5px; border: 1px solid #bbb9b9;" />
+                                </a>
+                            </td>
+                            <td style="text-align: center;">
+                                @Html.DisplayFor(p => item.Name)
+                            </td>
+
+                            <td style="text-align: center;">
+                                @Html.DisplayFor(p => item.Price)
+                            </td>
+                            <td style="text-align: center;">
+                                @Html.DisplayFor(p => item.ShadeColor)
+                            </td>
+                            <td style="text-align: center;">
+                                @Html.DisplayFor(p => item.ProductTypes.Name)
+                            </td>
+                            <td style="text-align: center;">
+                                <button asp-action="Remove" asp-route-id="@item.Id" class="btn btn-danger" type="submit">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        }
+                    </table>
+                </div>
+
+                <div class="col-4" style="padding-left: 30px;">
+                    <div class="row">
+                        <div class="col-12"><label>Name: </label></div>
+                        <div class="col-12" style="padding-bottom: 15px;">
+                            <input asp-for="@Model.Appointment.CustomerName" id="txtCustomerName" class="form-control" />
+                        </div>
+                        <div class="col-12"><label>Phone Number: </label></div>
+                        <div class="col-12" style="padding-bottom: 15px;">
+                            <input asp-for="@Model.Appointment.CustomerPhoneNumber" id="txtCustomerPhone" class="form-control" />
+                        </div>
+                        <div class="col-12"><label>Email: </label></div>
+                        <div class="col-12" style="padding-bottom: 15px;">
+                            <input asp-for="@Model.Appointment.CustomerEmail" id="txtCustomerEmail" class="form-control" />
+                        </div>
+
+                        <div class="col-12"><label>Appointment Date: </label></div>
+                        <div class="col-12" style="padding-bottom: 15px;">
+                            <input asp-for="@Model.Appointment.AppointmentDate" type="text" id="datepicker" value="" class="form-control" />
+                        </div>
+                        <div class="col-12"><label>Appointment Time: </label></div>
+                        <div class="col-12" style="padding-bottom: 15px;">
+                            <input asp-for="@Model.Appointment.AppointmentTime" type="text" id="timepicker" value="" class="timepicker form-control" />
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" id="btnPlaceOrder" class="btn btn-success">Schedule Appointment</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div>No item added to the shopping cart ...</div>
+    }
+</form>
+
+
+@section Scripts{ 
+    <script>
+        $(".timepicker").timepicker({
+            timeFormat: 'h:i A',
+            interval: 30,
+            minTime: '10',
+            maxTime: '3:00pm',
+            startTime: '10:00',
+            dynamic: true,
+            dropdown: true,
+            scrollbar: true
+        });
+
+        $(function () {
+            $("#datepicker").datepicker({
+                minDate: +1,
+                maxDate: "+3M",
+                dateFormat: "mm/dd/yy"
+            });
+        });
+
+        function onValidation() {
+            if ($("#txtCustomerName").val() === '') {
+
+                alert('Please enter Customer Name.');
+                return false;
+            } else {
+
+                if ($("#txtCustomerPhone").val() === '') {
+
+                    alert('Please enter Customer Phone.');
+                    return false;
+                } else {
+
+                    if ($("#txtCustomerEmail").val() === '') {
+
+                        alert('Please enter Customer Email.');
+                        return false;
+                    } else {
+
+                        if ($("#datepicker").val() === '') {
+
+                            alert('Please enter Appointment Date.');
+                            return false;
+                        } else {
+
+                            if ($("#timepicker").val() === '') {
+
+                                alert('Please enter Appointment Time.');
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }         
+
+            return true;
+        }
+
+    </script>
+
+}

@@ -4,14 +4,16 @@ using GraniteHouse.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GraniteHouse.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181105071841_AddAppointmentsModel")]
+    partial class AddAppointmentsModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -65,24 +67,6 @@ namespace GraniteHouse.Data.Migrations
                     b.HasIndex("SpecialTagsId");
 
                     b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("GraniteHouse.Models.ProductsSelectedForAppointment", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("AppointmentId");
-
-                    b.Property<string>("ProductId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AppointmentId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("ProductsSelectedForAppointment");
                 });
 
             modelBuilder.Entity("GraniteHouse.Models.ProductTypes", b =>
@@ -285,17 +269,6 @@ namespace GraniteHouse.Data.Migrations
                     b.HasOne("GraniteHouse.Models.SpecialTags", "SpecialTags")
                         .WithMany()
                         .HasForeignKey("SpecialTagsId");
-                });
-
-            modelBuilder.Entity("GraniteHouse.Models.ProductsSelectedForAppointment", b =>
-                {
-                    b.HasOne("GraniteHouse.Models.Appointments", "Appointments")
-                        .WithMany()
-                        .HasForeignKey("AppointmentId");
-
-                    b.HasOne("GraniteHouse.Models.Products", "Products")
-                        .WithMany()
-                        .HasForeignKey("ProductId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
