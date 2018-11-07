@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GraniteHouse.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -19,6 +19,8 @@ namespace GraniteHouse.Data
         public DbSet<Products> Products { get; set; }
         public DbSet<Appointments> Appointments { get; set; }
         public DbSet<ProductsSelectedForAppointment> ProductsSelectedForAppointment { get; set; }
+        public DbSet<ApplicationUser> ApplicationUser { get; set; }
+
 
 
     }

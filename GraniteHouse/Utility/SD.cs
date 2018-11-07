@@ -12,5 +12,9 @@ namespace GraniteHouse.Utility
 
         public const string SessionShoppingCartName = "ssShoppingCart";
 
+        public const string AdminEndUser = "Admin";
+        public const string NormalEndUser = "Normal User";
+        public const string NAEndUser = "Not Available";
+
     }
 }

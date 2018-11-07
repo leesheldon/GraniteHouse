@@ -14,6 +14,8 @@
     <Compile Remove="Data\Migrations\20181102090505_AddProductsModel.Designer.cs" />
     <Compile Remove="Data\Migrations\20181102093651_AddProductTypesModel.cs" />
     <Compile Remove="Data\Migrations\20181102093651_AddProductTypesModel.Designer.cs" />
+    <Compile Remove="Data\Migrations\20181106023655_AddApplicationUserModel.cs" />
+    <Compile Remove="Data\Migrations\20181106023655_AddApplicationUserModel.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Identity\Services\" />
     <Folder Include="Controllers\" />
     <Folder Include="wwwroot\images\ProductImage\" />
   </ItemGroup>

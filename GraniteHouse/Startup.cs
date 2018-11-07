@@ -13,6 +13,9 @@ using GraniteHouse.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Globalization;
+using GraniteHouse.Models;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using GraniteHouse.Services;
 
 namespace GraniteHouse
 {
@@ -38,10 +41,16 @@ namespace GraniteHouse
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            // Set Culture for Date
+            IdentityBuilder builder = services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultUI()
+                .AddDefaultTokenProviders();
+
+            // Add application services.
+            services.AddTransient<IGraniteEmailSender, EmailSender>();
+
+            // Set Culture for DateTime format
             services.Configure<RequestLocalizationOptions>(options =>
             {
                 options.DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture("en-US");
@@ -78,7 +87,7 @@ namespace GraniteHouse
             app.UseCookiePolicy();
 
             app.UseAuthentication();
-
+            
             app.UseSession();
 
             app.UseRequestLocalization();
