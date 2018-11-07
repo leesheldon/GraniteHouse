@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using GraniteHouse.Data;
 using GraniteHouse.Models;
@@ -18,15 +19,16 @@ namespace GraniteHouse.Areas.Admin.Controllers
     public class AppointmentsController : Controller
     {
         private readonly ApplicationDbContext _db;
+        private int PageSize = 3;
 
         public AppointmentsController(ApplicationDbContext db)
         {
             _db = db;
         }
 
-        public async Task<IActionResult> Index(
-            string searchName, string searchEmail,
-            string searchPhone, string searchDate)
+        public async Task<IActionResult> Index(int productPage=1,
+            string searchName="", string searchEmail="",
+            string searchPhone="", string searchDate="")
         {
             var claimsIdentity = (ClaimsIdentity)this.User.Identity;
             var loggedInUser = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
@@ -37,12 +39,39 @@ namespace GraniteHouse.Areas.Admin.Controllers
                         .Include(p => p.SalesPerson)
                         .ToListAsync();
 
-            //if(User.IsInRole(SD.AdminEndUser))
-            //{
-            //appointmentVM.Appointments = appointmentVM.Appointments
-            //        .Where(p => p.SalesPersonId == loggedInUser.Value)
-            //        .ToList();
-            //}
+            if (User.IsInRole(SD.NormalEndUser))
+            {
+                appointmentVM.Appointments = appointmentVM.Appointments
+                        .Where(p => p.SalesPersonId == loggedInUser.Value)
+                        .ToList();
+            }
+
+            StringBuilder param = new StringBuilder();
+            param.Append("/Admin/Appointments?productPage=:");
+
+            param.Append("&searchName=");
+            if (!string.IsNullOrEmpty(searchName))
+            {
+                param.Append(searchName);
+            }
+
+            param.Append("&searchEmail=");
+            if (!string.IsNullOrEmpty(searchEmail))
+            {
+                param.Append(searchEmail);
+            }
+
+            param.Append("&searchPhone=");
+            if (!string.IsNullOrEmpty(searchPhone))
+            {
+                param.Append(searchPhone);
+            }
+
+            param.Append("&searchDate=");
+            if (!string.IsNullOrEmpty(searchDate))
+            {
+                param.Append(searchDate);
+            }
 
             // Search criteria
             if (!string.IsNullOrEmpty(searchName))
@@ -78,9 +107,22 @@ namespace GraniteHouse.Areas.Admin.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return View(appointmentVM);
+                    
                 }                                
             }
+
+            var count = appointmentVM.Appointments.Count;
+            appointmentVM.Appointments = appointmentVM.Appointments.OrderBy(p => p.AppointmentDate)
+                   .Skip((productPage - 1) * PageSize)
+                   .Take(PageSize).ToList();
+
+            appointmentVM.PagingInfo = new PagingInfo
+            {
+                CurrentPage = productPage,
+                ItemsPerPage = PageSize,
+                TotalItems = count,
+                urlParam = param.ToString()
+            };
 
             return View(appointmentVM);
         }
